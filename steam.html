@@ -603,7 +603,6 @@
 									</li>
 								</ul>
 							</li>
-						
 					</ul>
 				</div>
 			</div>
@@ -624,10 +623,23 @@
 						</div>
 					</a>
 				</div>
-				
 				<div class="additionalright">
-					
-					
+					<p class="name"></p>
+					<div class="evaluate">
+						<p class="allpc">总体用户评测:</p>
+						<span class="hp"></span>
+						<span class="num"></span>
+					</div>
+					<ul class="u5">
+						<li class="sp1"></li>
+						<li class="sp1"></li>
+						<li class="sp1"></li>
+						<li class="sp1"></li>
+					</ul>
+					<img src="" alt="" class="adm">
+					<img src="" alt="" class="adm">
+					<img src="" alt="" class="adm">
+					<img src="" alt="" class="adm">
 				</div>
 				<div class="selectpage">
 					<div class="left">
@@ -642,14 +654,13 @@
 						<div class="lb4d2">5</div>
 						<div class="lb4d2">6</div>
 						<div class="lb4d3">...</div>
-						<div class="lb4d2"	>10</div>
+						<div class="lb4d2">10</div>
 						<div class="lb4d4">></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>				
-	
 	<script>
 	let arr = [];
 	let box = $(".box");
@@ -667,7 +678,10 @@
 	let mode = $(".mode");
 	let ma = $(".ma");
 	let lb4r = $(".lb4d4");
-	let lb4l = $(".lb4d1")
+	let lb4l = $(".lb4d1");
+	let ar = $(".additionalright");
+	let sp1 =$(".sp1");
+	let adm = $(".adm")
 	// 渲染数据轮播1
 	ajax.onreadystatechange = function(){
 		if(ajax.readyState == 4){
@@ -849,6 +863,41 @@
 					mode1.find(".system").append(img)
 				}
 				ma.append(mode1);
+				mode1.mouseenter(function(){
+						mode1.find(".mn").css("background","linear-gradient( to right, #c6e6f8 5%,#95bcd3 95%)");
+						ar.find(".name").html(data[m].name);
+						ar.find(".num").html("("+data[m].evaluatingCount+")");
+						if(data[m].evaluate == 2){
+							ar.find(".hp").html("好评如潮")
+						}
+						else if(data[m].evaluate == 2){
+							ar.find(".hp").html("特别好评")
+						}
+						else if(data[m].evaluate == 3){
+							ar.find(".hp").html("多半好评")
+						}
+						else if(data[m].evaluate == 4){
+							ar.find(".hp").html("褒贬不一")
+						}
+						else if(data[m].evaluate == 5){
+							ar.find(".hp").html("多半差评")
+						}
+						else if(data[m].evaluate == 6){
+							ar.find(".hp").html("差评如潮")
+						}
+						else if(data[m].evaluate == 7){
+							ar.find(".hp").html("无评论")
+						}
+						for(let n = 0; n < 4; n++){
+							$(sp1[n]).html(data[m].label[n]);
+							$(adm[n]).attr("src",data[m].imgUrl[n])
+						}
+						mode1.find(".mp1").css("color","#000000")
+					})
+					mode1.mouseleave(function(){
+						mode1.find(".mn").css("background","#202d39");
+						mode1.find(".mp1").css("color","#ffffff")
+					})
 			}
 		}
 	})
@@ -860,13 +909,12 @@
 			type:"GET",
 			dataType:"jsonp",
 			success(data){
-				for(let m= 0;m < 16; m++){
+				for(let m= 0;m < data.length; m++){
 					let mode1 = mode.clone(true);
-					mode1.css({"opacity":"1"})
+					mode1.css({"opacity":"1","position":"relative"})
 					// mode1.attr("href",data[m].url)
 					mode1.find(".mi1").attr("src",data[m].imgUrl[0]);
 					mode1.find(".mp1").html(data[m].name);
-					
 					for(let n = 0; n < 2;n++){
 						let p = $("<p>");
 						if(n == 0){
@@ -912,6 +960,41 @@
 						mode1.find(".system").append(img)
 					}
 					ma.append(mode1);
+					mode1.mouseenter(function(){
+						mode1.find(".mn").css("background","linear-gradient( to right, #c6e6f8 5%,#95bcd3 95%)");
+						ar.find(".name").html(data[m].name);
+						ar.find(".num").html("("+data[m].evaluatingCount+")");
+						if(data[m].evaluate == 2){
+							ar.find(".hp").html("好评如潮")
+						}
+						else if(data[m].evaluate == 2){
+							ar.find(".hp").html("特别好评")
+						}
+						else if(data[m].evaluate == 3){
+							ar.find(".hp").html("多半好评")
+						}
+						else if(data[m].evaluate == 4){
+							ar.find(".hp").html("褒贬不一")
+						}
+						else if(data[m].evaluate == 5){
+							ar.find(".hp").html("多半差评")
+						}
+						else if(data[m].evaluate == 6){
+							ar.find(".hp").html("差评如潮")
+						}
+						else if(data[m].evaluate == 7){
+							ar.find(".hp").html("无评论")
+						}
+						for(let n = 0; n < 4; n++){
+							$(sp1[n]).html(data[m].label[n]);
+							$(adm[n]).attr("src",data[m].imgUrl[n])
+						}
+						mode1.find(".mp1").css("color","#000000")
+					})
+					mode1.mouseleave(function(){
+						mode1.find(".mn").css("background","#202d39");
+						mode1.find(".mp1").css("color","#ffffff")
+					})
 				}
 			}
 		})
